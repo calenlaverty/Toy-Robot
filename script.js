@@ -7,52 +7,58 @@ class table {
   }
 }
 
+class robotActionRouter {
+  constructor() {
+    this.process = process;
+  }
+  static process(action, robot, args = null) {
+    action.process.call(robot, args);
+  }
+}
+
 class placeRobot {
-  static process(robot) {
-    console.log("Place" + robot);
+  static process(args) {
+    console.log("Place");
+    this.x = args.x;
+    this.y = args.y;
+    this.f = args.f;
   }
 }
 
 class moveRobot {
-  static process(robot) {
+  static process() {
     console.log("Move" + robot);
   }
 }
 
 class rotateRobot {
-  static process(robot) {
+  static process() {
     console.log("Rotate" + robot);
   }
 }
 
 class reportRobotPosition {
-  static process(robot) {
-    console.log(`x: ${robot.x}, y: ${robot.y}, f: ${robot.f}`);
-  }
-}
-
-class robotActionRouter {
-  constructor() {
-    this.process = process;
-  }
-  static process(action, robot) {
-    action.process(robot);
+  static process() {
+    console.log(`x: ${this.x}, y: ${this.y}, f: ${this.f}`);
   }
 }
 
 class robot {
-  constructor() {
-    this.x = 0;
-    this.y = 0;
-    this.f = "NORTH";
+  constructor(x = 0, y = 0, f = "NORTH") {
+    this.x = x;
+    this.y = y;
+    this.f = f;
+    this.init();
   }
 
-  processAction() {}
+  init() {
+    console.log("Robot is ready.");
+  }
 }
 
 const robot1 = new robot();
 
-robotActionRouter.process(placeRobot, robot1);
-robotActionRouter.process(moveRobot, robot1);
-robotActionRouter.process(rotateRobot, robot1);
+robotActionRouter.process(placeRobot, robot1, { x: 1, y: 2, f: "NORTH" });
+// robotActionRouter.process(moveRobot, robot1);
+// robotActionRouter.process(rotateRobot, robot1);
 robotActionRouter.process(reportRobotPosition, robot1);
