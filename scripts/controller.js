@@ -1,35 +1,35 @@
-export const place = function (robot, xpos, ypos, dir) {
-  robot.x = xpos;
-  robot.y = ypos;
-  robot.f = dir;
+export const place = function (object, xpos, ypos, dir) {
+  object.x = xpos;
+  object.y = ypos;
+  object.f = dir;
 };
 
-export const move = function (robot) {
+export const move = function (object) {
   const movements = {
     NORTH: () => {
-      robot.y += 1;
+      object.y += 1;
     },
     SOUTH: () => {
-      robot.y -= 1;
+      object.y -= 1;
     },
     EAST: () => {
-      robot.x += 1;
+      object.x += 1;
     },
     WEST: () => {
-      robot.x -= 1;
+      object.x -= 1;
     },
   };
 
-  movements[robot.f]();
+  movements[object.f]();
 };
 
-export const rotate = (robot, dir) => {
+export const rotate = (object, dir) => {
   const dirs = ["NORTH", "EAST", "SOUTH", "WEST"];
   const step = dir === "RIGHT" ? 1 : -1;
-  const newIndex = (dirs.indexOf(robot.f) + step + 4) % 4;
-  robot.f = dirs[newIndex];
+  const newIndex = (dirs.indexOf(object.f) + step + 4) % 4;
+  object.f = dirs[newIndex];
 };
 
-export const report = function (robot) {
-  console.log(`x: ${robot.x}, y: ${robot.y}, f: ${robot.f}`);
+export const report = function (object) {
+  console.log(`x: ${object.x}, y: ${object.y}, f: ${object.f}`);
 };
