@@ -1,22 +1,25 @@
+import table from "./table.js";
+const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
 export const place = function (object, xpos, ypos, dir) {
-  object.x = xpos;
-  object.y = ypos;
+  object.x = clamp(xpos, 0, table.xLen);
+  object.y = clamp(ypos, 0, table.yLen);
   object.f = dir;
 };
 
 export const move = function (object) {
   const movements = {
     NORTH: () => {
-      object.y += 1;
+      object.y = clamp(object.y + 1, 0, table.yLen);
     },
     SOUTH: () => {
-      object.y -= 1;
+      object.y = clamp(object.y - 1, 0, table.yLen);
     },
     EAST: () => {
-      object.x += 1;
+      object.x = clamp(object.x + 1, 0, table.xLen);
     },
     WEST: () => {
-      object.x -= 1;
+      object.x = clamp(object.x - 1, 0, table.xLen);
     },
   };
 
