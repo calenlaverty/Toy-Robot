@@ -1,43 +1,64 @@
-import {
-  validateDirection,
-  validatePosition,
-  validateRotation,
-} from "./validations.js";
 import { CARDINAL_DIRECTIONS, MOVEMENT_MAP } from "./utils/helpers.js";
 
-export const place = function (object, newXPosition, newYPosition, dir) {
+export const place = function (object, position, dir, surface) {
   try {
-    validateDirection(dir);
-    validatePosition({ x: newXPosition, y: newYPosition });
-    return { ...object, x: newXPosition, y: newYPosition, facing: dir };
+    object.validateDirection(dir);
+    surface.validatePosition(position);
+    return {
+      ...object,
+      position,
+      facing: dir,
+      onSurface: surface,
+    };
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    return object;
   }
 };
 
 export const move = function (object) {
   const movement = MOVEMENT_MAP[object.facing];
-  const newPosition = object[movement.axis] + movement.delta;
+  const newPosition = object.position[movement.axis] + movement.delta;
   try {
-    validatePosition({ ...object, [movement.axis]: newPosition });
-    return { ...object, [movement.axis]: newPosition };
+    object.validateHasBeenPlaced();
+    object.onSurface.validatePosition({
+      ...object,
+      [movement.axis]: newPosition,
+    });
+    return {
+      ...object,
+      position: {
+        ...object.position,
+        [movement.axis]: newPosition,
+      },
+    };
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    return object;
   }
 };
 
 export const rotate = (object, dir) => {
   try {
-    validateRotation(dir);
+    object.validateHasBeenPlaced();
+    object.validateRotation(dir);
     const rotationStep = dir === "RIGHT" ? 1 : -1;
     const newDirectionIndex =
       (CARDINAL_DIRECTIONS.indexOf(object.facing) + rotationStep + 4) % 4;
     return { ...object, facing: CARDINAL_DIRECTIONS[newDirectionIndex] };
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    return object;
   }
 };
 
 export const report = function (object) {
-  console.log(`x: ${object.x}, y: ${object.y}, facing: ${object.facing}`);
+  try {
+    object.validateHasBeenPlaced();
+    console.log(
+      `x: ${object.position.x}, y: ${object.position.y}, facing: ${object.facing}`
+    );
+  } catch (error) {
+    console.error(error);
+  }
 };
