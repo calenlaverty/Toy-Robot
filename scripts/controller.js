@@ -1,38 +1,43 @@
-import table from "./table.js";
-const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+import {
+  validateDirection,
+  validatePosition,
+  validateRotation,
+} from "./validations.js";
+import { CARDINAL_DIRECTIONS, MOVEMENT_MAP } from "./utils/helpers.js";
 
-export const place = function (object, xpos, ypos, dir) {
-  object.x = clamp(xpos, 0, table.xLen);
-  object.y = clamp(ypos, 0, table.yLen);
-  object.f = dir;
+export const place = function (object, newXPosition, newYPosition, dir) {
+  try {
+    validateDirection(dir);
+    validatePosition({ x: newXPosition, y: newYPosition });
+    return { ...object, x: newXPosition, y: newYPosition, facing: dir };
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const move = function (object) {
-  const movements = {
-    NORTH: () => {
-      object.y = clamp(object.y + 1, 0, table.yLen);
-    },
-    SOUTH: () => {
-      object.y = clamp(object.y - 1, 0, table.yLen);
-    },
-    EAST: () => {
-      object.x = clamp(object.x + 1, 0, table.xLen);
-    },
-    WEST: () => {
-      object.x = clamp(object.x - 1, 0, table.xLen);
-    },
-  };
-
-  movements[object.f]();
+  const movement = MOVEMENT_MAP[object.facing];
+  const newPosition = object[movement.axis] + movement.delta;
+  try {
+    validatePosition({ ...object, [movement.axis]: newPosition });
+    return { ...object, [movement.axis]: newPosition };
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const rotate = (object, dir) => {
-  const dirs = ["NORTH", "EAST", "SOUTH", "WEST"];
-  const step = dir === "RIGHT" ? 1 : -1;
-  const newIndex = (dirs.indexOf(object.f) + step + 4) % 4;
-  object.f = dirs[newIndex];
+  try {
+    validateRotation(dir);
+    const rotationStep = dir === "RIGHT" ? 1 : -1;
+    const newDirectionIndex =
+      (CARDINAL_DIRECTIONS.indexOf(object.facing) + rotationStep + 4) % 4;
+    return { ...object, facing: CARDINAL_DIRECTIONS[newDirectionIndex] };
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const report = function (object) {
-  console.log(`x: ${object.x}, y: ${object.y}, f: ${object.f}`);
+  console.log(`x: ${object.x}, y: ${object.y}, facing: ${object.facing}`);
 };
