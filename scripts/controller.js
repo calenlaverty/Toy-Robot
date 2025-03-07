@@ -44,7 +44,10 @@ export const rotate = (object, dir) => {
     object.validateRotation(dir);
     const rotationStep = dir === "RIGHT" ? 1 : -1;
     const newDirectionIndex =
-      (CARDINAL_DIRECTIONS.indexOf(object.facing) + rotationStep + 4) % 4;
+      (CARDINAL_DIRECTIONS.indexOf(object.facing) +
+        rotationStep +
+        CARDINAL_DIRECTIONS.length) %
+      CARDINAL_DIRECTIONS.length;
     return { ...object, facing: CARDINAL_DIRECTIONS[newDirectionIndex] };
   } catch (error) {
     console.error(error);
