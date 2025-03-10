@@ -1,0 +1,99 @@
+body {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.container {
+  display: flex;
+  gap: 20px;
+}
+.input-section {
+  flex: 1;
+}
+.table-section {
+  flex: 1;
+}
+.table {
+  display: grid;
+  grid-template-columns: repeat(5, 50px);
+  grid-template-rows: repeat(5, 50px);
+  gap: 2px;
+  margin-top: 20px;
+}
+.cell {
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.robot {
+  width: 30px;
+  height: 30px;
+  background-color: #3498db;
+  border-radius: 50%;
+  position: relative;
+}
+.robot::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 16px solid red;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  transform-origin: bottom center;
+}
+.robot.north::after {
+  transform: translateX(-50%) rotate(0deg);
+}
+.robot.east::after {
+  transform: translateX(-50%) rotate(90deg);
+}
+.robot.south::after {
+  transform: translateX(-50%) rotate(180deg);
+}
+.robot.west::after {
+  transform: translateX(-50%) rotate(270deg);
+}
+textarea {
+  width: 100%;
+  height: 150px;
+}
+button {
+  margin-top: 10px;
+  padding: 8px 16px;
+}
+.output {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  min-height: 100px;
+  background-color: #f8f8f8;
+}
+.coordinates {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+.y-coords {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+  position: absolute;
+  left: -25px;
+  top: 0;
+  bottom: 0;
+}
+.x-coords {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: -25px;
+  left: 0;
+  right: 0;
+}
