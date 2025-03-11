@@ -8,8 +8,7 @@ export default class Table {
         Math.random().toString(36).substring(2, 15);
       console.log("Using fallback UUID generation");
     }
-    this.xLen = 5;
-    this.yLen = 5;
+    (this.type = "Table"), (this.xLen = 5), (this.yLen = 5);
   }
 
   //can be called to check if the given position is valid on this table (could be relevant if we had tables of different size, or if there were obstracles on the table)

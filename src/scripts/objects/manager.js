@@ -20,7 +20,7 @@ export default class ObjectManager {
   //in the application as is, there is only a single instance of a table or robot created; which makes the whole entity manager sort of pointless, but this was more implemented for fun; this method makes it easy to get the robot or the table
   getFirstOfObjectType(objectType) {
     const values = Array.from(this.objects.values());
-    return values.filter((item) => item.constructor.name === objectType)[0];
+    return values.filter((item) => item.type === objectType)[0];
   }
 
   //use this to create instances robots or tables, creating the objects via method, makes them available through the object manager.

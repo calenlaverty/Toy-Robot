@@ -10,11 +10,12 @@ export default class Robot {
         Math.random().toString(36).substring(2, 15);
       console.log("Using fallback UUID generation");
     }
-    this.state = {
-      position: { x: undefined, y: undefined },
-      facing: undefined,
-      onSurface: undefined,
-    };
+    (this.type = "Robot"),
+      (this.state = {
+        position: { x: undefined, y: undefined },
+        facing: undefined,
+        onSurface: undefined,
+      });
     console.log(`Robot created with uuid: ${this.uuid}`);
   }
 
