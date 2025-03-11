@@ -24,7 +24,7 @@ export default class Table {
     }
   }
 
-  //the table is responsible for drawing itself, not sure if this is good or not.
+  //the table is responsible for drawing itself, not sure if this is good or not since it entangles data and teh data object
   draw(tableEl, robotPosition, robotDirection) {
     for (let y = this.yLen - 1; y >= 0; y--) {
       for (let x = 0; x < this.yLen; x++) {
