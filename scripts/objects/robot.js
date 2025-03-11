@@ -1,30 +1,33 @@
 import { CARDINAL_DIRECTIONS, ALLOWED_ROTATIONS } from "../utils/helpers.js";
 
-class Robot {
+export default class Robot {
   constructor() {
-    (this.position = { x: undefined, y: undefined }),
-      (this.y = undefined),
-      (this.facing = undefined),
-      (this.onSurface = undefined);
+    this.uuid = crypto.randomUUID();
+    this.state = {
+      position: { x: undefined, y: undefined },
+      facing: undefined,
+      onSurface: undefined,
+    };
   }
 
-  validateDirection = function (dir) {
+  //used getState / setState methods to provide ways for interacting with the objects that don't involve directly changing it in random locations; this provides us more control over how updates are applied to the object
+  getState() {
+    return { ...this.state };
+  }
+
+  setState(newState) {
+    this.state = newState;
+  }
+
+  validateDirection(dir) {
     if (!CARDINAL_DIRECTIONS.includes(dir)) {
       throw new Error("Invalid direction");
     }
-  };
+  }
 
-  validateRotation = function (dir) {
+  validateRotation(dir) {
     if (!ALLOWED_ROTATIONS.includes(dir)) {
       throw new Error("Invalid direction");
     }
-  };
-
-  validateHasBeenPlaced = function () {
-    if (this.onSurface == null) {
-      throw new Error("Not on a surface");
-    }
-  };
+  }
 }
-
-export default new Robot();

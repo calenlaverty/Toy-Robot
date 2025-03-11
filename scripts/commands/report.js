@@ -1,12 +1,13 @@
 export class ReportService {
-  static apply = function (object) {
+  static apply(object, surface) {
+    const currentObject = object.getState();
     try {
-      object.validateHasBeenPlaced();
+      surface.validateObjectIsOnThisSurface(currentObject);
       console.log(
-        `x: ${object.position.x}, y: ${object.position.y}, facing: ${object.facing}`
+        `x: ${currentObject.position.x}, y: ${currentObject.position.y}, facing: ${currentObject.facing}`
       );
     } catch (error) {
       console.error(error);
     }
-  };
+  }
 }

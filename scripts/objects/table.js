@@ -1,16 +1,29 @@
-class Table {
+export default class Table {
   constructor() {
+    this.uuid = crypto.randomUUID();
     this.xLen = 5;
     this.yLen = 5;
   }
 
-  validatePosition = function (pos) {
-    if (pos.x < 0 || pos.x > this.xLen || pos.y < 0 || pos.y > this.yLen) {
+  validatePosition(pos) {
+    if (
+      pos.x < 0 ||
+      pos.x > this.xLen - 1 ||
+      pos.y < 0 ||
+      pos.y > this.yLen - 1
+    ) {
       throw new Error("Position is outside of bounds");
     }
-  };
+  }
 
-  draw = function (containerElement) {
+  validateObjectIsOnThisSurface(object) {
+    if (object.onSurface == null) {
+      throw new Error("Not on table");
+    }
+  }
+
+  //the table is responsivable for drawing itself, not sure if this is good or not.
+  draw(containerElement) {
     const yCoords = document.createElement("div");
     yCoords.className = "y-coords";
     for (let i = 0; i < this.yLen; i++) {
@@ -37,7 +50,5 @@ class Table {
         containerElement.appendChild(cell);
       }
     }
-  };
+  }
 }
-
-export default new Table();

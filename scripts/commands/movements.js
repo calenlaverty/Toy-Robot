@@ -1,62 +1,68 @@
 import { CARDINAL_DIRECTIONS, MOVEMENT_MAP } from "../utils/helpers.js";
 
 export class PlaceService {
-  static apply = function (object, position, dir, surface) {
+  static apply(object, position, dir, surface) {
+    const currentObject = object.getState();
     try {
       object.validateDirection(dir);
       surface.validatePosition(position);
-      return {
-        ...object,
+      object.setState({
+        ...currentObject,
         position,
         facing: dir,
         onSurface: surface,
-      };
+      });
     } catch (error) {
       console.error(error);
       return object;
     }
-  };
+  }
 }
 
 export class MoveService {
-  static apply = function (object) {
-    const movement = MOVEMENT_MAP[object.facing];
-    const newPosition = object.position[movement.axis] + movement.delta;
+  static apply(object, surface) {
+    const currentObject = object.getState();
+    const movement = MOVEMENT_MAP[currentObject.facing];
+    const newPosition = currentObject.position[movement.axis] + movement.delta;
     try {
-      object.validateHasBeenPlaced();
-      object.onSurface.validatePosition({
-        ...object,
+      surface.validateObjectIsOnThisSurface(currentObject);
+      currentObject.onSurface.validatePosition({
+        currentObject,
         [movement.axis]: newPosition,
       });
-      return {
-        ...object,
+      object.setState({
+        ...currentObject,
         position: {
-          ...object.position,
+          ...currentObject.position,
           [movement.axis]: newPosition,
         },
-      };
+      });
     } catch (error) {
       console.error(error);
       return object;
     }
-  };
+  }
 }
 
 export class RotationService {
-  static apply = (object, dir) => {
+  static apply(object, dir, surface) {
+    const currentObject = object.getState();
     try {
-      object.validateHasBeenPlaced();
+      surface.validateObjectIsOnThisSurface(currentObject);
       object.validateRotation(dir);
       const rotationStep = dir === "RIGHT" ? 1 : -1;
       const newDirectionIndex =
-        (CARDINAL_DIRECTIONS.indexOf(object.facing) +
+        (CARDINAL_DIRECTIONS.indexOf(currentObject.facing) +
           rotationStep +
           CARDINAL_DIRECTIONS.length) %
         CARDINAL_DIRECTIONS.length;
-      return { ...object, facing: CARDINAL_DIRECTIONS[newDirectionIndex] };
+      object.setState({
+        ...currentObject,
+        facing: CARDINAL_DIRECTIONS[newDirectionIndex],
+      });
     } catch (error) {
       console.error(error);
       return object;
     }
-  };
+  }
 }
