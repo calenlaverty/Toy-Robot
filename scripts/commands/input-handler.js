@@ -26,6 +26,5 @@ export class InputHandler {
         break;
       }
     }
-    console.log(object.getState());
   }
 }

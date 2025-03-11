@@ -29,10 +29,7 @@ body {
   position: relative;
 }
 .robot {
-  width: 30px;
-  height: 30px;
-  background-color: #3498db;
-  border-radius: 50%;
+  background-color: #f6ffa7;
   position: relative;
 }
 .robot::after {
@@ -42,11 +39,12 @@ body {
   height: 0;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 16px solid red;
-  top: -12px;
+  border-bottom: 16px solid rgb(0, 0, 0);
+  top: 8px;
   left: 50%;
   transform: translateX(-50%);
   transform-origin: bottom center;
+  opacity: 50%;
 }
 .robot.north::after {
   transform: translateX(-50%) rotate(0deg);
@@ -74,26 +72,4 @@ button {
   padding: 10px;
   min-height: 100px;
   background-color: #f8f8f8;
-}
-.coordinates {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 5px;
-}
-.y-coords {
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: space-between;
-  position: absolute;
-  left: -25px;
-  top: 0;
-  bottom: 0;
-}
-.x-coords {
-  display: flex;
-  justify-content: space-between;
-  position: absolute;
-  bottom: -25px;
-  left: 0;
-  right: 0;
 }

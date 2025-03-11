@@ -1,7 +1,7 @@
 import { InputHandler } from "./commands/input-handler.js";
 import ObjectManager from "./objects/manager.js";
 
-const addEventListeners = function (outputEl) {
+const addEventListeners = function (outputEl, tableEl) {
   document.getElementById("execute").addEventListener("click", () => {
     //input
     const inputText = document.getElementById("commands").value;
@@ -14,8 +14,8 @@ const addEventListeners = function (outputEl) {
     const tableUuid = ObjectManager.getFirstOfObjectType("Table").uuid;
     const table = ObjectManager.getObject(tableUuid);
     InputHandler.process(inputParts, robot, table);
-
-    update();
+    tableEl.innerHTML = "";
+    update(tableEl, robot, table);
   });
 };
 
@@ -25,7 +25,7 @@ const init = function () {
   const table = ObjectManager.createObject("Table");
   const robot = ObjectManager.createObject("Robot");
 
-  addEventListeners(outputEl);
+  addEventListeners(outputEl, tableEl);
   table.draw(tableEl);
 };
 
@@ -33,6 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
   init();
 });
 
-const update = function () {
-  console.log("Updating...");
+const update = function (tableEl, robot, table) {
+  table.draw(tableEl, robot.state.position, robot.state.facing);
 };

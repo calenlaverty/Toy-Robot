@@ -22,32 +22,18 @@ export default class Table {
     }
   }
 
-  //the table is responsivable for drawing itself, not sure if this is good or not.
-  draw(containerElement) {
-    const yCoords = document.createElement("div");
-    yCoords.className = "y-coords";
-    for (let i = 0; i < this.yLen; i++) {
-      const coord = document.createElement("span");
-      coord.textContent = 4 - i;
-      yCoords.appendChild(coord);
-    }
-    containerElement.appendChild(yCoords);
-
-    const xCoords = document.createElement("div");
-    xCoords.className = "x-coords";
-    for (let i = 0; i < this.xLen; i++) {
-      const coord = document.createElement("span");
-      coord.textContent = i;
-      xCoords.appendChild(coord);
-    }
-    containerElement.appendChild(xCoords);
-
+  //the table is responsible for drawing itself, not sure if this is good or not.
+  draw(tableEl, robotPosition, robotDirection) {
     for (let y = this.yLen - 1; y >= 0; y--) {
       for (let x = 0; x < this.yLen; x++) {
         const cell = document.createElement("div");
-        cell.className = "cell";
-        cell.id = `cell-${x}-${y}`;
-        containerElement.appendChild(cell);
+        cell.classList.add("cell");
+        cell.textContent = `${x},${y}`;
+        tableEl.appendChild(cell);
+        if (robotPosition && robotPosition.x === x && robotPosition.y === y) {
+          cell.classList.add("robot");
+          cell.classList.add(robotDirection.toLowerCase());
+        }
       }
     }
   }
