@@ -1,6 +1,13 @@
 export default class Table {
   constructor() {
-    this.uuid = crypto.randomUUID();
+    try {
+      this.uuid = crypto.randomUUID();
+    } catch (e) {
+      this.uuid =
+        Math.random().toString(36).substring(2, 15) +
+        Math.random().toString(36).substring(2, 15);
+      console.log("Using fallback UUID generation");
+    }
     this.xLen = 5;
     this.yLen = 5;
   }

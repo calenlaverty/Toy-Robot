@@ -2,7 +2,14 @@ import { CARDINAL_DIRECTIONS, ALLOWED_ROTATIONS } from "../utils/helpers.js";
 
 export default class Robot {
   constructor() {
-    this.uuid = crypto.randomUUID();
+    try {
+      this.uuid = crypto.randomUUID();
+    } catch (e) {
+      this.uuid =
+        Math.random().toString(36).substring(2, 15) +
+        Math.random().toString(36).substring(2, 15);
+      console.log("Using fallback UUID generation");
+    }
     this.state = {
       position: { x: undefined, y: undefined },
       facing: undefined,
