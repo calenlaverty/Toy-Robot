@@ -72,4 +72,5 @@ button {
   padding: 10px;
   min-height: 100px;
   background-color: #f8f8f8;
+  white-space: pre-wrap;
 }

@@ -8,23 +8,20 @@ export class InputHandler {
       case "PLACE": {
         const newPosition = { x: +commandParts[1], y: +commandParts[2] };
         const newDirection = commandParts[3];
-        PlaceService.apply(object, newPosition, newDirection, surface);
-        break;
+        return PlaceService.apply(object, newPosition, newDirection, surface);
       }
       case "MOVE": {
-        MoveService.apply(object, surface);
-        break;
+        return MoveService.apply(object, surface);
       }
       case "RIGHT":
       case "LEFT": {
-        const rotationDirectation = commandParts[0];
-        RotationService.apply(object, rotationDirectation, surface);
-        break;
+        return RotationService.apply(object, commandParts[0], surface);
       }
       case "REPORT": {
-        ReportService.apply(object, surface);
-        break;
+        return ReportService.apply(object, surface);
       }
+      default:
+        return "Not a valid command";
     }
   }
 }

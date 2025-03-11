@@ -2,8 +2,8 @@ import { CARDINAL_DIRECTIONS, MOVEMENT_MAP } from "../utils/helpers.js";
 
 export class PlaceService {
   static apply(object, position, dir, surface) {
-    const currentObject = object.getState();
     try {
+      const currentObject = object.getState();
       object.validateDirection(dir);
       surface.validatePosition(position);
       object.setState({
@@ -12,42 +12,49 @@ export class PlaceService {
         facing: dir,
         onSurface: surface,
       });
+      return `Placed Robot at x:${position.x}, y:${
+        position.y
+      }, facing ${dir.toLowerCase()}`;
     } catch (error) {
-      console.error(error);
-      return object;
+      return error;
     }
   }
 }
 
 export class MoveService {
   static apply(object, surface) {
-    const currentObject = object.getState();
-    const movement = MOVEMENT_MAP[currentObject.facing];
-    const newPosition = currentObject.position[movement.axis] + movement.delta;
     try {
+      const currentObject = object.getState();
       surface.validateObjectIsOnThisSurface(currentObject);
+      const movement = MOVEMENT_MAP[currentObject.facing];
+      const newPosition =
+        currentObject.position[movement.axis] + movement.delta;
       currentObject.onSurface.validatePosition({
         currentObject,
         [movement.axis]: newPosition,
       });
-      object.setState({
+      const newState = {
         ...currentObject,
         position: {
           ...currentObject.position,
           [movement.axis]: newPosition,
         },
-      });
+      };
+      object.setState(newState);
+      console.log(newState);
+      return `Moved ${currentObject.facing.toLowerCase()}; New position is x:${
+        newState.position.x
+      }, y:${newState.position.y}`;
     } catch (error) {
-      console.error(error);
-      return object;
+      return error;
     }
   }
 }
 
 export class RotationService {
   static apply(object, dir, surface) {
-    const currentObject = object.getState();
     try {
+      const currentObject = object.getState();
       surface.validateObjectIsOnThisSurface(currentObject);
       object.validateRotation(dir);
       const rotationStep = dir === "RIGHT" ? 1 : -1;
@@ -60,9 +67,9 @@ export class RotationService {
         ...currentObject,
         facing: CARDINAL_DIRECTIONS[newDirectionIndex],
       });
+      return `Rotated ${dir.toLowerCase()}`;
     } catch (error) {
-      console.error(error);
-      return object;
+      return error;
     }
   }
 }

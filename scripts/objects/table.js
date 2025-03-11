@@ -5,6 +5,7 @@ export default class Table {
     this.yLen = 5;
   }
 
+  //can be called to check if the given position is valid on this table (could be relevant if we had tables of different size, or if there were obstracles on the table)
   validatePosition(pos) {
     if (
       pos.x < 0 ||
@@ -12,10 +13,11 @@ export default class Table {
       pos.y < 0 ||
       pos.y > this.yLen - 1
     ) {
-      throw new Error("Position is outside of bounds");
+      throw new Error("Position is not valid");
     }
   }
 
+  //check if the given object is found on the table
   validateObjectIsOnThisSurface(object) {
     if (object.onSurface == null) {
       throw new Error("Not on table");

@@ -3,11 +3,14 @@ export class ReportService {
     const currentObject = object.getState();
     try {
       surface.validateObjectIsOnThisSurface(currentObject);
-      console.log(
-        `x: ${currentObject.position.x}, y: ${currentObject.position.y}, facing: ${currentObject.facing}`
+      return (
+        `~~~START OF REPORT~~~\n` +
+        `Robot is located at: x: ${currentObject.position.x}, y: ${currentObject.position.y}\n` +
+        `Robot is facing: ${currentObject.facing.toLowerCase()}\n` +
+        `~~~END OF REPORT~~~`
       );
     } catch (error) {
-      console.error(error);
+      return error;
     }
   }
 }
