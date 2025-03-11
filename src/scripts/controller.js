@@ -1,31 +1,52 @@
 import { InputHandler } from "./commands/input-handler.js";
 import ObjectManager from "./objects/manager.js";
 
-const addEventListeners = function (outputEl, tableEl, objectManager) {
+let objectManager;
+
+const addEventListeners = function (outputEl, tableEl) {
   document.getElementById("execute").addEventListener("click", () => {
-    //input
-    const inputText = document.getElementById("commands").value.toUpperCase();
-    const inputParts = inputText.split(/[\s,]+/);
+    try {
+      //input
+      const inputText = document.getElementById("commands").value.toUpperCase();
+      const inputParts = inputText.split(/[\s,]+/);
 
-    //target objects
-    const robotUuid = objectManager.getFirstOfObjectType("Robot").uuid;
-    const robot = objectManager.getObject(robotUuid);
-    const tableUuid = objectManager.getFirstOfObjectType("Table").uuid;
-    const table = objectManager.getObject(tableUuid);
+      //target objects
+      const robotObject = objectManager.getFirstOfObjectType("Robot");
+      if (!robotObject) {
+        console.error("Robot not found in ObjectManager");
+        outputEl.innerHTML += "Error: Robot not found\n";
+        return;
+      }
+      const robotUuid = robotObject.uuid;
+      const robot = objectManager.getObject(robotUuid);
 
-    const resultOfAction = InputHandler.process(inputParts, robot, table);
-    update(tableEl, robot, table, outputEl, resultOfAction);
+      const tableObject = objectManager.getFirstOfObjectType("Table");
+      if (!tableObject) {
+        console.error("Table not found in ObjectManager");
+        outputEl.innerHTML += "Error: Table not found\n";
+        return;
+      }
+
+      const tableUuid = tableObject.uuid;
+      const table = objectManager.getObject(tableUuid);
+
+      const resultOfAction = InputHandler.process(inputParts, robot, table);
+      update(tableEl, robot, table, outputEl, resultOfAction);
+    } catch (error) {
+      console.error("Error processing command:", error);
+      outputEl.innerHTML += `Error: ${error.message}\n`;
+    }
   });
 };
 
 const init = function () {
-  const objectManager = new ObjectManager();
+  objectManager = new ObjectManager();
   const tableEl = document.getElementById("table");
   const outputEl = document.getElementById("output");
   const table = objectManager.createObject("Table");
   const robot = objectManager.createObject("Robot");
 
-  addEventListeners(outputEl, tableEl, objectManager);
+  addEventListeners(outputEl, tableEl);
   table.draw(tableEl);
 };
 
