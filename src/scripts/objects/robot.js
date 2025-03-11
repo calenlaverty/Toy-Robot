@@ -8,6 +8,7 @@ export default class Robot {
       facing: undefined,
       onSurface: undefined,
     };
+    console.log(`Robot created with uuid: ${this.uuid}`);
   }
 
   //used getState / setState methods to provide ways for interacting with the objects that don't involve directly changing it in random locations; this provides us more control over how updates are applied to the object
