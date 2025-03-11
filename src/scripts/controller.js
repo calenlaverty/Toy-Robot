@@ -6,6 +6,7 @@ let objectManager;
 const addEventListeners = function (outputEl, tableEl) {
   document.getElementById("execute").addEventListener("click", () => {
     try {
+      console.log(objectManager.getObjects());
       //input
       const inputText = document.getElementById("commands").value.toUpperCase();
       const inputParts = inputText.split(/[\s,]+/);
