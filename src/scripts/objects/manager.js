@@ -1,7 +1,7 @@
 import Robot from "./robot.js";
 import Table from "./table.js";
 
-class ObjectManager {
+export default class ObjectManager {
   constructor() {
     this.objectTypes = { Robot, Table };
     this.objects = new Map();
@@ -37,4 +37,4 @@ class ObjectManager {
 }
 
 //we only want a single instance of the object manager
-export default new ObjectManager();
+//export default new ObjectManager();
