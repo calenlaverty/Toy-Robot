@@ -1,18 +1,19 @@
 import { InputHandler } from "./commands/input-handler.js";
 import ObjectManager from "./objects/manager.js";
+import Robot from "./objects/robot.js";
+import Table from "./objects/table.js";
 
 let objectManager;
 
 const addEventListeners = function (outputEl, tableEl) {
   document.getElementById("execute").addEventListener("click", () => {
     try {
-      console.log(objectManager.getObjects());
       //input
       const inputText = document.getElementById("commands").value.toUpperCase();
       const inputParts = inputText.split(/[\s,]+/);
 
       //target objects
-      const robotObject = objectManager.getFirstOfObjectType("Robot");
+      const robotObject = objectManager.getFirstOfObjectType(Robot);
       if (!robotObject) {
         console.error("Robot not found in ObjectManager");
         outputEl.innerHTML += "Error: Robot not found\n";
@@ -21,7 +22,7 @@ const addEventListeners = function (outputEl, tableEl) {
       const robotUuid = robotObject.uuid;
       const robot = objectManager.getObject(robotUuid);
 
-      const tableObject = objectManager.getFirstOfObjectType("Table");
+      const tableObject = objectManager.getFirstOfObjectType(Table);
       if (!tableObject) {
         console.error("Table not found in ObjectManager");
         outputEl.innerHTML += "Error: Table not found\n";
@@ -45,7 +46,7 @@ const init = function () {
   const tableEl = document.getElementById("table");
   const outputEl = document.getElementById("output");
   const table = objectManager.createObject("Table");
-  const robot = objectManager.createObject("Robot");
+  objectManager.createObject("Robot");
 
   addEventListeners(outputEl, tableEl);
   table.draw(tableEl);

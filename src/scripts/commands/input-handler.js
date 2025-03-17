@@ -1,5 +1,4 @@
 import { ReportService } from "./report.js";
-import { PlaceService, MoveService, RotationService } from "./movements.js";
 
 export class InputHandler {
   static process(commandParts, object, surface) {
@@ -8,14 +7,14 @@ export class InputHandler {
       case "PLACE": {
         const newPosition = { x: +commandParts[1], y: +commandParts[2] };
         const newDirection = commandParts[3];
-        return PlaceService.apply(object, newPosition, newDirection, surface);
+        return object.place(newPosition, newDirection, surface);
       }
       case "MOVE": {
-        return MoveService.apply(object, surface);
+        return object.move(surface);
       }
       case "RIGHT":
       case "LEFT": {
-        return RotationService.apply(object, commandParts[0], surface);
+        return object.rotate(commandParts[0], surface);
       }
       case "REPORT": {
         return ReportService.apply(object, surface);
