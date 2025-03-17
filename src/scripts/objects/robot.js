@@ -1,17 +1,22 @@
+import Toy from "./toy.js";
+
 import {
   CARDINAL_DIRECTIONS,
   ALLOWED_ROTATIONS,
   MOVEMENT_MAP,
 } from "../utils/helpers.js";
 
-export default class Robot {
+export default class Robot extends Toy {
   constructor() {
-    this.uuid = crypto.randomUUID();
-    this.state = {
-      position: { x: undefined, y: undefined },
-      facing: undefined,
-      onSurface: undefined,
-    };
+    super();
+  }
+
+  getState() {
+    return { ...this.state };
+  }
+
+  setState(newState) {
+    this.state = newState;
   }
 
   place(position, dir, surface) {
@@ -80,14 +85,6 @@ export default class Robot {
       console.error(error);
       return error;
     }
-  }
-
-  getState() {
-    return { ...this.state };
-  }
-
-  setState(newState) {
-    this.state = newState;
   }
 
   validateDirection(dir) {
