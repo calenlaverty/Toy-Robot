@@ -1,15 +1,17 @@
-import { InputHandler } from "./commands/input-handler.js";
-import ObjectManager from "./objects/manager.js";
-import Robot from "./objects/robot.js";
-import Table from "./objects/table.js";
+import { InputHandler } from "./commands/input-handler";
+import ObjectManager from "./objects/manager";
+import Robot from "./objects/robot";
+import Table from "./objects/table";
 
-let objectManager;
+let objectManager: any;
 
-const addEventListeners = function (outputEl, tableEl) {
-  document.getElementById("execute").addEventListener("click", () => {
+const addEventListeners = function (outputEl: any, tableEl: any) {
+  document.getElementById("execute")?.addEventListener("click", () => {
     try {
       //input
-      const inputText = document.getElementById("commands").value.toUpperCase();
+      const inputText = (
+        document.getElementById("commands") as HTMLInputElement
+      )?.value.toUpperCase();
       const inputParts = inputText.split(/[\s,]+/);
 
       //target objects
@@ -34,7 +36,7 @@ const addEventListeners = function (outputEl, tableEl) {
 
       const resultOfAction = InputHandler.process(inputParts, robot, table);
       update(tableEl, robot, table, outputEl, resultOfAction);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error processing command:", error);
       outputEl.innerHTML += `Error: ${error.message}\n`;
     }
@@ -56,7 +58,13 @@ document.addEventListener("DOMContentLoaded", () => {
   init();
 });
 
-const update = function (tableEl, robot, table, outputEl, resultOfAction) {
+const update = function (
+  tableEl: HTMLElement,
+  robot: any,
+  table: any,
+  outputEl: any,
+  resultOfAction: any
+) {
   outputEl.innerHTML += resultOfAction + "\n";
   tableEl.innerHTML = "";
   table.draw(tableEl, robot.state.position, robot.state.facing);

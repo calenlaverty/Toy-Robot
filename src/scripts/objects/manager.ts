@@ -2,13 +2,15 @@ import Robot from "./robot.js";
 import Table from "./table.js";
 
 export default class ObjectManager {
+  objectTypes: any;
+  objects: any;
   constructor() {
     this.objectTypes = { Robot, Table };
     this.objects = new Map();
   }
 
   //return a specific object by id
-  getObject(uuid) {
+  getObject(uuid: string) {
     return this.objects.get(uuid);
   }
 
@@ -18,13 +20,13 @@ export default class ObjectManager {
   }
 
   //in the application as is, there is only a single instance of a table or robot created; which makes the whole entity manager sort of pointless, but this was more implemented for fun; this method makes it easy to get the robot or the table
-  getFirstOfObjectType(objectType) {
+  getFirstOfObjectType(objectType: any) {
     const values = Array.from(this.objects.values());
     return values.filter((item) => item instanceof objectType)[0];
   }
 
   //use this to create instances robots or tables, creating the objects via method, makes them available through the object manager.
-  createObject(objectType) {
+  createObject(objectType: any) {
     const ObjectClass = this.objectTypes[objectType];
     if (!ObjectClass) {
       throw new Error(`Unknown object type: ${objectType}`);
@@ -35,6 +37,3 @@ export default class ObjectManager {
     return createdObject;
   }
 }
-
-//we only want a single instance of the object manager
-//export default new ObjectManager();

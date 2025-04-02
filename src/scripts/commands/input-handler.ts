@@ -1,7 +1,7 @@
-import { ReportService } from "./report.js";
+import { ReportService } from "./report";
 
 export class InputHandler {
-  static process(commandParts, object, surface) {
+  static process(commandParts: any, object: any, surface: any) {
     const command = commandParts[0];
     switch (command) {
       case "PLACE": {

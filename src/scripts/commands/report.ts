@@ -1,5 +1,5 @@
 export class ReportService {
-  static apply(object, surface) {
+  static apply(object: any, surface: any) {
     const currentObject = object.getState();
     try {
       surface.validateObjectIsOnThisSurface(currentObject);
