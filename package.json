@@ -6,7 +6,7 @@
     "typescript": "^5.8.2"
   },
   "scripts": {
-    "dev": "parcel build/index.html",
-    "build": "parcel build build/index.html"
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html"
   }
 }
