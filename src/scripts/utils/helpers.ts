@@ -1,5 +1,7 @@
 export const CARDINAL_DIRECTIONS = ["NORTH", "EAST", "SOUTH", "WEST"];
 
+export const ROTATION_COMMANDS = ["LEFT", "RIGHT"];
+
 export const MOVEMENT_MAP = {
   NORTH: { axis: "y", delta: 1 },
   SOUTH: { axis: "y", delta: -1 },
