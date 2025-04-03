@@ -10,10 +10,3 @@ export type State = {
 export type RotationType = "LEFT" | "RIGHT";
 
 export type DirectionType = "NORTH" | "EAST" | "SOUTH" | "WEST";
-
-export enum Direction {
-  NORTH = "NORTH",
-  EAST = "EAST",
-  SOUTH = "SOUTH",
-  WEST = "WEST",
-}
