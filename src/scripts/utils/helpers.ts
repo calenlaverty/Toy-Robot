@@ -1,5 +1,3 @@
-export const ALLOWED_ROTATIONS = ["LEFT", "RIGHT"];
-
 export const CARDINAL_DIRECTIONS = ["NORTH", "EAST", "SOUTH", "WEST"];
 
 export const MOVEMENT_MAP = {

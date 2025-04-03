@@ -1,10 +1,6 @@
-import Toy from "./toy.js";
-import { Coordinate, State } from "../utils/types";
-import {
-  CARDINAL_DIRECTIONS,
-  ALLOWED_ROTATIONS,
-  MOVEMENT_MAP,
-} from "../utils/helpers";
+import Toy from "./toy";
+import { Coordinate, State, DirectionType, RotationType } from "../utils/types";
+import { CARDINAL_DIRECTIONS, MOVEMENT_MAP } from "../utils/helpers";
 
 export default class Robot extends Toy {
   constructor() {
@@ -19,15 +15,12 @@ export default class Robot extends Toy {
     this.state = newState;
   }
 
-  place(position: Coordinate, dir: string, surface: any) {
+  place(position: Coordinate, dir: DirectionType) {
     try {
-      this.validateDirection(dir);
-      surface.validatePosition(position);
       this.setState({
         ...this.getState(),
         position,
         facing: dir,
-        onSurface: surface,
       });
       return `Placed Robot at x:${position.x}, y:${
         position.y
@@ -38,18 +31,14 @@ export default class Robot extends Toy {
     }
   }
 
-  move(surface: any) {
+  move() {
     try {
       const currentState = this.getState();
-      surface.validateObjectIsOnThisSurface(currentState);
       const movement =
         MOVEMENT_MAP[currentState.facing as keyof typeof MOVEMENT_MAP];
       const axis = movement.axis as keyof Coordinate;
       const newPosition = currentState.position[axis] + movement.delta;
-      currentState.onSurface.validatePosition({
-        currentState,
-        [movement.axis]: newPosition,
-      });
+
       const newState = {
         ...currentState,
         position: {
@@ -67,11 +56,9 @@ export default class Robot extends Toy {
     }
   }
 
-  rotate(dir: string, surface: any) {
+  rotate(dir: RotationType) {
     try {
       const currentState = this.getState();
-      surface.validateObjectIsOnThisSurface(currentState);
-      this.validateRotation(dir);
       const rotationStep = dir === "RIGHT" ? 1 : -1;
       const newDirectionIndex =
         (CARDINAL_DIRECTIONS.indexOf(currentState.facing || "") +
@@ -80,24 +67,12 @@ export default class Robot extends Toy {
         CARDINAL_DIRECTIONS.length;
       this.setState({
         ...currentState,
-        facing: CARDINAL_DIRECTIONS[newDirectionIndex],
+        facing: CARDINAL_DIRECTIONS[newDirectionIndex] as DirectionType,
       });
       return `Rotated ${dir.toLowerCase()}`;
     } catch (error) {
       console.error(error);
       return error;
-    }
-  }
-
-  validateDirection(dir: string) {
-    if (!CARDINAL_DIRECTIONS.includes(dir)) {
-      throw new Error("Invalid direction");
-    }
-  }
-
-  validateRotation(dir: string) {
-    if (!ALLOWED_ROTATIONS.includes(dir)) {
-      throw new Error("Invalid direction");
     }
   }
 }
