@@ -1,9 +1,12 @@
 import { Coordinate, DirectionType } from "../utils/types";
 
 export default class Grid {
-  constructor(public xLen = 5, public yLen = 5) {}
+  static xLen = 5;
+  static yLen = 5;
 
-  validatePosition(pos: Coordinate) {
+  constructor() {}
+
+  static validatePosition(pos: Coordinate) {
     if (
       pos.x < 0 ||
       pos.x > this.xLen - 1 ||
@@ -14,10 +17,10 @@ export default class Grid {
     }
   }
 
-  render(
+  static render(
     GridEl: HTMLTableElement,
-    robotPosition: Coordinate,
-    robotDirection: DirectionType
+    robotPosition?: Coordinate,
+    robotDirection?: DirectionType
   ) {
     for (let y = this.yLen - 1; y >= 0; y--) {
       for (let x = 0; x < this.yLen; x++) {
@@ -25,7 +28,12 @@ export default class Grid {
         cell.classList.add("cell");
         cell.textContent = `${x},${y}`;
         GridEl.appendChild(cell);
-        if (robotPosition && robotPosition.x === x && robotPosition.y === y) {
+        if (
+          robotDirection &&
+          robotPosition &&
+          robotPosition.x === x &&
+          robotPosition.y === y
+        ) {
           cell.classList.add("robot");
           cell.classList.add(robotDirection.toLowerCase());
         }

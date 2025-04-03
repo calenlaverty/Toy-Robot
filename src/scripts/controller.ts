@@ -1,40 +1,48 @@
 import { InputHandler } from "./commands/input-handler";
+import { Coordinate } from "./utils/types";
 import ObjectManager from "./objects/manager";
 import Grid from "./objects/grid";
 import Robot from "./objects/robot";
 
 let objectManager: ObjectManager;
+let robot: Robot | null;
 
 const addEventListeners = function (
   outputEl: HTMLElement,
-  gridEl: HTMLTableElement,
-  robot: Robot,
-  grid: Grid
+  gridEl: HTMLTableElement
 ) {
   document.getElementById("execute")?.addEventListener("click", () => {
     try {
+      let resultOfAction: { message: string; position: Coordinate };
+      let message: string, position: Coordinate;
       const inputText = (
         document.getElementById("commands") as HTMLInputElement
       )?.value.toUpperCase();
-      const inputParts = inputText.split(/[\s,]+/);
-      const resultOfAction = InputHandler.process(inputParts, robot);
-      update(gridEl, robot, grid, outputEl, resultOfAction);
+      const commandParts = inputText.split(/[\s,]+/);
+      ({ message, robot } = InputHandler.process(commandParts, robot));
+      update(gridEl, robot, outputEl, message);
     } catch (error: any) {
+      const dateTime = new Date().toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+      });
       console.error("Error processing command:", error);
-      outputEl.innerHTML += `Error: ${error.message}\n`;
+      outputEl.innerHTML = `${dateTime} - ${error.message}\n${outputEl.innerHTML}`;
     }
   });
 };
 
 const init = function () {
   objectManager = new ObjectManager();
-  const gridEl = document.getElementById("Grid") as HTMLTableElement;
+  const gridEl = document.getElementById("grid") as HTMLTableElement;
   const outputEl = document.getElementById("output") as HTMLElement;
-  const grid = new Grid();
-  const robot = objectManager.createRobot();
-
-  addEventListeners(outputEl, gridEl, robot, grid);
-  grid.render(gridEl, robot.state.position, robot.state.facing);
+  addEventListeners(outputEl, gridEl);
+  Grid.render(gridEl);
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -43,12 +51,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const update = function (
   gridEl: HTMLTableElement,
-  robot: Robot,
-  grid: Grid,
+  robot: Robot | null,
   outputEl: HTMLElement,
   resultOfAction: any
 ) {
-  outputEl.innerHTML += resultOfAction + "\n";
+  const dateTime = new Date().toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: true,
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  });
+  outputEl.innerHTML =
+    dateTime + " - " + resultOfAction + "\n" + outputEl.innerHTML;
   gridEl.innerHTML = "";
-  grid.render(gridEl, robot.state.position, robot.state.facing);
+  Grid.render(gridEl, robot?.state.position, robot?.state.facing);
 };
