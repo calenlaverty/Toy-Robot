@@ -1,8 +1,7 @@
 import Toy from "./toy";
 import Grid from "./grid";
-
 import { Coordinate, State, DirectionType, RotationType } from "../utils/types";
-import { CARDINAL_DIRECTIONS, MOVEMENT_MAP } from "../utils/helpers";
+import { CARDINAL_DIRECTIONS } from "../utils/helpers";
 
 export default class Robot extends Toy {
   constructor() {
@@ -34,26 +33,31 @@ export default class Robot extends Toy {
         robot: this,
       };
     } catch (error) {
-      throw new Error(`${error}`);
+      throw new Error(String(error));
     }
   }
 
   move(): { message: string; robot: Robot } {
     try {
       const currentState = this.getState();
-      const movement =
-        MOVEMENT_MAP[currentState.facing as keyof typeof MOVEMENT_MAP];
-      const axis = movement.axis as keyof Coordinate;
-      const newAxisPosition = currentState.position[axis] + movement.delta;
-      const newCoordinate = {
-        ...currentState.position,
-        [movement.axis]: newAxisPosition,
-      };
-      Grid.validatePosition(newCoordinate);
-      const newState = {
-        ...currentState,
-        position: newCoordinate,
-      };
+      const newState = currentState;
+
+      switch (currentState.facing) {
+        case "NORTH":
+          newState.position.y++;
+          break;
+        case "EAST":
+          newState.position.x++;
+          break;
+        case "SOUTH":
+          newState.position.y--;
+          break;
+        case "WEST":
+          newState.position.x--;
+          break;
+      }
+
+      Grid.validatePosition(newState.position);
       this.setState(newState);
       return {
         message: `Moved ${
@@ -88,7 +92,7 @@ export default class Robot extends Toy {
         robot: this,
       };
     } catch (error) {
-      throw new Error(`${error}`);
+      throw new Error(String(error));
     }
   }
 }

@@ -42,7 +42,7 @@ export abstract class InputHandler {
           }
           return robot.place(newPosition, newDirection);
         } catch (error: unknown) {
-          throw new Error(`${error}`);
+          throw new Error(String(error));
         }
       }
       case "MOVE": {
@@ -50,7 +50,7 @@ export abstract class InputHandler {
           validateRobotExists(robot);
           return robot!.move();
         } catch (error: unknown) {
-          throw new Error(`${error}`);
+          throw new Error(String(error));
         }
       }
       case "RIGHT":
@@ -59,7 +59,7 @@ export abstract class InputHandler {
           validateRobotExists(robot);
           return robot!.rotate(command);
         } catch (error: unknown) {
-          throw new Error(`${error}`);
+          throw new Error(String(error));
         }
       }
       case "REPORT": {
@@ -70,7 +70,7 @@ export abstract class InputHandler {
             robot: robot!,
           };
         } catch (error: unknown) {
-          throw new Error(`${error}`);
+          throw new Error(String(error));
         }
       }
       default:
@@ -82,7 +82,7 @@ export abstract class InputHandler {
           };
         } catch (error: unknown) {
           return {
-            message: `${error}`,
+            message: String(error),
             robot: null,
           };
         }
