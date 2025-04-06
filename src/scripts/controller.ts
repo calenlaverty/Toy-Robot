@@ -1,10 +1,8 @@
 import { InputHandler } from "./commands/input-handler";
 import { Coordinate } from "./utils/types";
-import ObjectManager from "./objects/manager";
 import Grid from "./objects/grid";
 import Robot from "./objects/robot";
 
-let objectManager: ObjectManager;
 let robot: Robot | null;
 
 const addEventListeners = function (
@@ -38,7 +36,6 @@ const addEventListeners = function (
 };
 
 const init = function () {
-  objectManager = new ObjectManager();
   const gridEl = document.getElementById("grid") as HTMLTableElement;
   const outputEl = document.getElementById("output") as HTMLElement;
   addEventListeners(outputEl, gridEl);

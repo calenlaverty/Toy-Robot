@@ -1,5 +1,5 @@
 import { ReportService } from "./report";
-import { DirectionType, RotationType, Coordinate } from "../utils/types";
+import { DirectionType, RotationType } from "../utils/types";
 import { CARDINAL_DIRECTIONS, ROTATION_COMMANDS } from "../utils/helpers";
 import Robot from "../objects/robot";
 import Grid from "../objects/grid";
