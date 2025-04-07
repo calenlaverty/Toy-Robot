@@ -4,13 +4,13 @@ import { CARDINAL_DIRECTIONS, ROTATION_COMMANDS } from "../utils/helpers";
 import Robot from "../objects/robot";
 import Grid from "../objects/grid";
 
-const validateDirection = function (direction: DirectionType) {
+export const validateDirection = function (direction: DirectionType) {
   if (CARDINAL_DIRECTIONS.includes(direction) !== true) {
     throw new Error(`Command is not valid.`);
   }
 };
 
-const validateRobotExists = function (robot: Robot | null) {
+export const validateRobotExists = function (robot: Robot | null) {
   if (robot) {
     return true;
   }
