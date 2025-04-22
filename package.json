@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "@jest/globals": "^29.7.0",
+    "@playwright/test": "^1.52.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.17",
     "jest": "^29.7.0",
@@ -11,8 +12,11 @@
     "typescript": "^5.8.2"
   },
   "scripts": {
-    "dev": "parcel src/index.html",
+    "start": "parcel src/index.html",
     "build": "parcel build src/index.html",
     "test": "jest"
+  },
+  "dependencies": {
+    "playwright": "^1.52.0"
   }
 }
