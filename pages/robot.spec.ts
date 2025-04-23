@@ -27,12 +27,10 @@ export class RobotPage {
     return await this.page.locator(".robot").textContent();
   }
 
-  async getMostRecentOutput() {
-    const stringOutput = await this.outputBox.textContent();
-    const endOfLine = stringOutput?.indexOf("\n");
-    let result = stringOutput?.slice(0, endOfLine ?? 0);
-    const endOfDateTime = stringOutput?.indexOf(" - ");
-    // result = result?.slice(endOfDateTime) + 3;
-    return result;
+  async getMostRecentOutput(): Promise<string> {
+    const text = (await this.outputBox.textContent()) || "";
+    const firstLine = text.split("\n")[0];
+    const parts = firstLine.split(" - ");
+    return parts.length > 1 ? parts[1] : firstLine;
   }
 }

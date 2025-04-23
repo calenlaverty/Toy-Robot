@@ -33,14 +33,17 @@ export default class Robot extends Toy {
         robot: this,
       };
     } catch (error) {
-      throw new Error(String(error));
+      throw error instanceof Error ? error : new Error(String(error));
     }
   }
 
   move(): { message: string; robot: Robot } {
     try {
       const currentState = this.getState();
-      const newState = currentState;
+      const newState = {
+        ...currentState,
+        position: { ...currentState.position },
+      };
 
       switch (currentState.facing) {
         case "NORTH":
@@ -57,6 +60,7 @@ export default class Robot extends Toy {
           break;
       }
 
+      console.log(this.getState());
       Grid.validatePosition(newState.position);
       this.setState(newState);
       return {
@@ -66,11 +70,7 @@ export default class Robot extends Toy {
         robot: this,
       };
     } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      } else {
-        throw new Error(String(error));
-      }
+      throw error instanceof Error ? error : new Error(String(error));
     }
   }
 
@@ -92,7 +92,7 @@ export default class Robot extends Toy {
         robot: this,
       };
     } catch (error) {
-      throw new Error(String(error));
+      throw error instanceof Error ? error : new Error(String(error));
     }
   }
 }

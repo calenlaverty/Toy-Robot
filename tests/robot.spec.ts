@@ -16,29 +16,23 @@ test.describe("Robot movement tests", () => {
 
   test("Move", async ({ page }) => {
     await robotPage.executeCommand("PLACE 0,0,NORTH");
-    expect(await robotPage.getRobotPosition()).toContain("0,0");
+    expect(await robotPage.getMostRecentOutput()).toContain("x:0, y:0");
     await robotPage.executeCommand("MOVE");
-    expect(await robotPage.getRobotPosition()).toContain("0,1");
+    expect(await robotPage.getMostRecentOutput()).toContain("x:0, y:1");
     await robotPage.executeCommand("MOVE");
-    expect(await robotPage.getRobotPosition()).toContain("0,2");
+    expect(await robotPage.getMostRecentOutput()).toContain("x:0, y:2");
     await robotPage.executeCommand("MOVE");
-    expect(await robotPage.getRobotPosition()).toContain("0,3");
+    expect(await robotPage.getMostRecentOutput()).toContain("x:0, y:3");
+    await robotPage.executeCommand("MOVE");
+    expect(await robotPage.getMostRecentOutput()).toContain("x:0, y:4");
     await robotPage.executeCommand("MOVE");
     expect(await robotPage.getRobotPosition()).toContain("0,4");
+    await robotPage.executeCommand("RIGHT");
+    expect(await robotPage.getMostRecentOutput()).toContain("Rotated right");
     await robotPage.executeCommand("MOVE");
-    expect(await robotPage.getRobotPosition()).toContain("0,4");
-    expect(await robotPage.getRobotPosition()).toContain("0,4");
-  });
-
-  test("GetOutput", async ({ page }) => {
-    await robotPage.executeCommand("PLACE 0,0,NORTH");
-    await robotPage.executeCommand("PLACE 0,0,NORTH");
-    await robotPage.executeCommand("PLACE 0,0,NORTH");
-    await robotPage.executeCommand("PLACE 0,0,NORTH");
-    await robotPage.executeCommand("PLACE 0,0,NORTH");
-    await robotPage.executeCommand("PLACE 0,0,NORTH");
-    expect(await robotPage.getRobotPosition()).toContain("0,0");
-    const result = await robotPage.getMostRecentOutput();
-    console.log(result);
+    expect(await robotPage.getMostRecentOutput()).toContain(
+      "Error: Position is not valid"
+    );
+    await robotPage.executeCommand("REPORT");
   });
 });
