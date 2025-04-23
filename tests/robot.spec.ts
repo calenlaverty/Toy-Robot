@@ -30,9 +30,16 @@ test.describe("Robot movement tests", () => {
     await robotPage.executeCommand("RIGHT");
     expect(await robotPage.getMostRecentOutput()).toContain("Rotated right");
     await robotPage.executeCommand("MOVE");
+    expect(await robotPage.getMostRecentOutput()).toContain("x:1, y:4");
+    await robotPage.executeCommand("MOVE");
+    expect(await robotPage.getMostRecentOutput()).toContain("x:2, y:4");
+    await robotPage.executeCommand("MOVE");
+    expect(await robotPage.getMostRecentOutput()).toContain("x:3, y:4");
+    await robotPage.executeCommand("MOVE");
+    expect(await robotPage.getMostRecentOutput()).toContain("x:4, y:4");
+    await robotPage.executeCommand("MOVE");
     expect(await robotPage.getMostRecentOutput()).toContain(
       "Error: Position is not valid"
     );
-    await robotPage.executeCommand("REPORT");
   });
 });
