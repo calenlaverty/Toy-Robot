@@ -12,7 +12,7 @@
     "typescript": "^5.8.2"
   },
   "scripts": {
-    "playwright test:ci": "echo 'Playwright tests disables in CI'",
+    "playwright-test:ci": "echo 'Playwright tests disables in CI'",
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html",
     "test": "jest"
