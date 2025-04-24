@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.67% </span>
+                <span class="strong">65.3% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>82/98</span>
+                <span class='fraction'>64/98</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">45.45% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/15</span>
+                <span class='fraction'>5/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.67% </span>
+                <span class="strong">65.3% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>82/98</span>
+                <span class='fraction'>64/98</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -172,14 +172,14 @@
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -238,26 +238,26 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import Toy from "./toy";
 import Grid from "./grid";
@@ -335,27 +335,27 @@ export default class Robot extends Toy {
 <span class="cstat-no" title="statement not covered" >    }</span>
   }
 &nbsp;
-  rotate(dir: RotationType): { message: string; robot: Robot } {
-    try {
-      const currentState = this.getState();
-      const rotationStep = dir === "RIGHT" ? 1 <span class="branch-0 cbranch-no" title="branch not covered" >: -1;</span>
-      const newDirectionIndex =
-        (CARDINAL_DIRECTIONS.indexOf(currentState.facing<span class="branch-0 cbranch-no" title="branch not covered" > || "")</span> +
-          rotationStep +
-          CARDINAL_DIRECTIONS.length) %
-        CARDINAL_DIRECTIONS.length;
-      this.setState({
-        ...currentState,
-        facing: CARDINAL_DIRECTIONS[newDirectionIndex] as DirectionType,
-      });
-      return {
-        message: `Rotated ${dir.toLowerCase()}`,
-        robot: this,
-      };
-    } <span class="branch-0 cbranch-no" title="branch not covered" >catch (error) {</span>
+<span class="fstat-no" title="function not covered" >  rotate(dir: RotationType): { message: string; robot: Robot } {</span>
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >      const currentState = this.getState();</span>
+<span class="cstat-no" title="statement not covered" >      const rotationStep = dir === "RIGHT" ? 1 : -1;</span>
+<span class="cstat-no" title="statement not covered" >      const newDirectionIndex =</span>
+<span class="cstat-no" title="statement not covered" >        (CARDINAL_DIRECTIONS.indexOf(currentState.facing || "") +</span>
+<span class="cstat-no" title="statement not covered" >          rotationStep +</span>
+<span class="cstat-no" title="statement not covered" >          CARDINAL_DIRECTIONS.length) %</span>
+<span class="cstat-no" title="statement not covered" >        CARDINAL_DIRECTIONS.length;</span>
+<span class="cstat-no" title="statement not covered" >      this.setState({</span>
+<span class="cstat-no" title="statement not covered" >        ...currentState,</span>
+<span class="cstat-no" title="statement not covered" >        facing: CARDINAL_DIRECTIONS[newDirectionIndex] as DirectionType,</span>
+<span class="cstat-no" title="statement not covered" >      });</span>
+<span class="cstat-no" title="statement not covered" >      return {</span>
+<span class="cstat-no" title="statement not covered" >        message: `Rotated ${dir.toLowerCase()}`,</span>
+<span class="cstat-no" title="statement not covered" >        robot: this,</span>
+<span class="cstat-no" title="statement not covered" >      };</span>
+<span class="cstat-no" title="statement not covered" >    } catch (error) {</span>
 <span class="cstat-no" title="statement not covered" >      throw new Error(String(error));</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
-  }
+<span class="cstat-no" title="statement not covered" >  }</span>
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -364,7 +364,7 @@ export default class Robot extends Toy {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-07T03:16:17.609Z
+                at 2025-04-17T04:24:51.039Z
             </div>
         <script src="../prettify.js"></script>
         <script>

@@ -46,7 +46,7 @@ describe("process() - ROTATION function", () => {
   });
 
   test("process() - ROTATE - Has Robot", () => {
-    expect(InputHandler.process(["RIGHT"], new Robot())).toEqual(
+    expect(InputHandler.process(["RIGHT123"], new Robot())).toEqual(
       expect.objectContaining({
         message: "Rotated right",
         robot: expect.objectContaining({

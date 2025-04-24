@@ -14,7 +14,7 @@ export class RobotPage {
   }
 
   async goto() {
-    await this.page.goto("localhost:1234");
+    await this.page.goto("/");
   }
 
   async executeCommand(command: string) {
