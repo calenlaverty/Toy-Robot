@@ -12,7 +12,9 @@
 - Playwright (Automated Testing)
 - Parcel (Build)
 - Github w/ CI
+- Github Secrets (For Azure Storage)
 - Netlify w/ CI
+- Azure Storage (Playwright Report)
 
 ## Toy Robot Brief
 
