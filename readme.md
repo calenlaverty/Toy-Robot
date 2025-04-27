@@ -1,8 +1,20 @@
-This is my attempt at Robot Robot challenge using OOP.
+# Toy Robot
 
----
+## Languages used
 
-## Description
+- Javascript / Typescript
+- HTML
+- CSS
+
+## Tools used
+
+- Jest (Unit Testing)
+- Playwright (Automated Testing)
+- Parcel (Build)
+- Github w/ CI
+- Netlify w/ CI
+
+## Toy Robot Brief
 
 - The application is a simulation of a Robot robot moving on a square Gridtop, of dimensions 5 units x 5 units.
 - There are no other obstructions on the Grid Grid.
