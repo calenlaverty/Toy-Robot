@@ -13,7 +13,7 @@ export default class Robot extends Toy {
   }
 
   setState(newState: State) {
-    this.state = newState;
+    this.state = structuredClone(newState);
   }
 
   place(
@@ -40,10 +40,7 @@ export default class Robot extends Toy {
   move(): { message: string; robot: Robot } {
     try {
       const currentState = this.getState();
-      const newState = {
-        ...currentState,
-        position: { ...currentState.position },
-      };
+      const newState = structuredClone(currentState);
 
       switch (currentState.facing) {
         case "NORTH":
