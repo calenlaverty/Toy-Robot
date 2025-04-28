@@ -6,7 +6,7 @@ import Grid from "../objects/grid";
 
 export const validateDirection = function (direction: DirectionType) {
   if (CARDINAL_DIRECTIONS.includes(direction) !== true) {
-    throw new Error(`Command is not valid.`);
+    throw new Error("Command is not valid.");
   }
 };
 
@@ -24,9 +24,7 @@ export abstract class InputHandler {
     commandParts: string[],
     robot: Robot | null
   ): { message: string; robot: Robot | null } {
-    const command = CARDINAL_DIRECTIONS.includes(commandParts[0])
-      ? (commandParts[0] as DirectionType)
-      : ROTATION_COMMANDS.includes(commandParts[0])
+    const command = ROTATION_COMMANDS.includes(commandParts[0])
       ? (commandParts[0] as RotationType)
       : commandParts[0];
 

@@ -16,11 +16,15 @@ describe("Input handler validation functions", () => {
   });
 
   test("validateDirection() - Returns an error if no proper direction specified", () => {
-    expect(() => validateDirection("FAKE" as DirectionType)).toThrow();
+    expect(() => validateDirection("FAKE" as DirectionType)).toThrow(
+      "Command is not valid."
+    );
   });
 
   test("validateRobotExists() - Throw an error when no robot exists", () => {
-    expect(() => validateRobotExists(null)).toThrow();
+    expect(() => validateRobotExists(null)).toThrow(
+      "Robot does not exist; use the PLACE commands to create the Robot."
+    );
   });
 
   test("validateRobotExists() - Does not error when a robot exists", () => {
