@@ -16,6 +16,13 @@
 - Netlify w/ CI
 - Azure Storage (Playwright Report)
 
+## To do
+
+- Write better structured automated tests
+- Increase unit test coverage
+- Add Docker container
+- Add Vue
+
 ## Toy Robot Brief
 
 - The application is a simulation of a Robot robot moving on a square Gridtop, of dimensions 5 units x 5 units.
