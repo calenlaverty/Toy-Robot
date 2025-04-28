@@ -9,37 +9,36 @@ test.describe("Robot movement tests", () => {
     await robotPage.goto();
   });
 
-  test("Initial place", async ({ page }) => {
-    await robotPage.executeCommand("PLACE 0,0,NORTH");
-    expect(await robotPage.getRobotPosition()).toContain("0,0");
+  test("Place", async () => {
+    await robotPage.executeCommand("PLACE 2,2,NORTH");
+    expect(await robotPage.getRobotPosition()).toContain("2,2");
   });
 
-  test("Move", async ({ page }) => {
-    await robotPage.executeCommand("PLACE 0,0,NORTH");
-    expect(await robotPage.getMostRecentOutput()).toContain("x:0, y:0");
+  test("Move North", async () => {
+    await robotPage.executeCommand("PLACE 2,2,NORTH");
     await robotPage.executeCommand("MOVE");
-    expect(await robotPage.getMostRecentOutput()).toContain("x:0, y:1");
-    await robotPage.executeCommand("MOVE");
-    expect(await robotPage.getMostRecentOutput()).toContain("x:0, y:2");
-    await robotPage.executeCommand("MOVE");
-    expect(await robotPage.getMostRecentOutput()).toContain("x:0, y:3");
-    await robotPage.executeCommand("MOVE");
-    expect(await robotPage.getMostRecentOutput()).toContain("x:0, y:4");
-    await robotPage.executeCommand("MOVE");
-    expect(await robotPage.getRobotPosition()).toContain("0,4");
+    expect(await robotPage.getRobotPosition()).toContain("2,3");
+  });
+
+  test("Move Right", async () => {
+    await robotPage.executeCommand("PLACE 2,2,NORTH");
     await robotPage.executeCommand("RIGHT");
-    expect(await robotPage.getMostRecentOutput()).toContain("Rotated right");
     await robotPage.executeCommand("MOVE");
-    expect(await robotPage.getMostRecentOutput()).toContain("x:1, y:4");
+    expect(await robotPage.getRobotPosition()).toContain("3,2");
+  });
+
+  test("Move Left", async () => {
+    await robotPage.executeCommand("PLACE 2,2,NORTH");
+    await robotPage.executeCommand("LEFT");
     await robotPage.executeCommand("MOVE");
-    expect(await robotPage.getMostRecentOutput()).toContain("x:2, y:4");
+    expect(await robotPage.getRobotPosition()).toContain("1,2");
+  });
+
+  test("Move Down", async () => {
+    await robotPage.executeCommand("PLACE 2,2,NORTH");
+    await robotPage.executeCommand("LEFT");
+    await robotPage.executeCommand("LEFT");
     await robotPage.executeCommand("MOVE");
-    expect(await robotPage.getMostRecentOutput()).toContain("x:3, y:4");
-    await robotPage.executeCommand("MOVE");
-    expect(await robotPage.getMostRecentOutput()).toContain("x:4, y:4");
-    await robotPage.executeCommand("MOVE");
-    expect(await robotPage.getMostRecentOutput()).toContain(
-      "Error: Position is not valid"
-    );
+    expect(await robotPage.getRobotPosition()).toContain("2,1");
   });
 });

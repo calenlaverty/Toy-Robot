@@ -5,7 +5,7 @@ node_modules
 dist
 
 # Unit Tests
-coverage 
+coverage
 
 # Automated Tests
 /test-results/
