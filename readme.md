@@ -18,8 +18,6 @@
 
 ## To do
 
-- Write better structured automated tests
-- Increase unit test coverage
 - Add Docker container
 - Add Vue
 
