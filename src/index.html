@@ -3,33 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
     <title>Toy Robot</title>
     <script src="./scripts/controller.ts" type="module"></script>
   </head>
+
   <body>
-    <h1>Toy Robot</h1>
-    <div class="container">
-      <div class="input-section">
-        <h2>Commands</h2>
-        <p>
-          Valid commands:<br />
-          PLACE X,Y,F (where F is NORTH, SOUTH, EAST, WEST)<br />
-          MOVE<br />
-          LEFT<br />
-          RIGHT<br />
-          REPORT
-        </p>
-        <textarea id="commands" placeholder="Enter a single command"></textarea>
-        <div>
-          <button id="execute">Execute Command</button>
-        </div>
-        <div class="output" id="output"></div>
-      </div>
-      <div class="grid-section">
-        <h2>Grid (5x5)</h2>
-        <div class="grid" id="grid"></div>
-      </div>
-    </div>
+    <script type="module" src="./main.ts"></script>
+    <div id="app"></div>
   </body>
 </html>
