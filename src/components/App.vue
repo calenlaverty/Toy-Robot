@@ -1,7 +1,6 @@
 <template>
   <div>
     <Header />
-    <Instructions />
     <CommandBox @execute-command="handleCommand" />
     <Grid
       :robot-position="robot?.state.position"
@@ -14,7 +13,6 @@
 <script>
 import { InputHandler } from "../scripts/commands/input-handler";
 import Header from "./Header.vue";
-import Instructions from "./Instructions.vue";
 import Grid from "./Grid.vue";
 import CommandBox from "./CommandBox.vue";
 import OutputBox from "./OutputBox.vue";
@@ -23,7 +21,6 @@ export default {
   name: "App",
   components: {
     Header,
-    Instructions,
     Grid,
     CommandBox,
     OutputBox,
@@ -70,3 +67,51 @@ export default {
   },
 };
 </script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  color: #2d3748;
+  line-height: 1.6;
+}
+
+#app {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem;
+  min-height: 100vh;
+}
+
+.main-content {
+  width: 100%;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.right-column {
+  position: sticky;
+  top: 1rem;
+}
+</style>

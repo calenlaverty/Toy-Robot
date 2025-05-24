@@ -27,15 +27,12 @@ export default {
 
 <style scoped>
 .output-content {
-  background: #f5f5f5;
-  padding: 10px;
-  max-height: 200px;
+  flex: 1;
+  padding: 1rem 1.5rem;
   overflow-y: auto;
-  font-family: monospace;
-  white-space: pre-line;
-}
-
-.error-message {
-  color: red;
+  background: #fafafa;
+  font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
 }
 </style>
