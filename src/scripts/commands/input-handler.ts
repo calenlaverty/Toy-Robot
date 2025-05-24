@@ -2,7 +2,7 @@ import { ReportService } from "./report";
 import { DirectionType, RotationType } from "../utils/types";
 import { CARDINAL_DIRECTIONS, ROTATION_COMMANDS } from "../utils/helpers";
 import Robot from "../objects/robot";
-import Grid from "../objects/grid";
+import { GridUtils as Grid } from "../utils/grid";
 
 export const validateDirection = function (direction: DirectionType) {
   if (CARDINAL_DIRECTIONS.includes(direction) !== true) {

@@ -1,5 +1,5 @@
 import Toy from "./toy";
-import Grid from "./grid";
+import { GridUtils } from "../utils/grid";
 import { Coordinate, State, DirectionType, RotationType } from "../utils/types";
 import { CARDINAL_DIRECTIONS } from "../utils/helpers";
 
@@ -13,7 +13,11 @@ export default class Robot extends Toy {
   }
 
   setState(newState: State) {
-    this.state = structuredClone(newState);
+    this.state = {
+      ...newState,
+      position: { ...newState.position },
+      facing: newState.facing,
+    };
   }
 
   place(
@@ -40,7 +44,11 @@ export default class Robot extends Toy {
   move(): { message: string; robot: Robot } {
     try {
       const currentState = this.getState();
-      const newState = structuredClone(currentState);
+      const newState = {
+        ...currentState,
+        position: { ...currentState.position },
+        facing: currentState.facing,
+      };
 
       switch (currentState.facing) {
         case "NORTH":
@@ -58,7 +66,7 @@ export default class Robot extends Toy {
       }
 
       console.log(this.getState());
-      Grid.validatePosition(newState.position);
+      GridUtils.validatePosition(newState.position);
       this.setState(newState);
       return {
         message: `Moved ${
