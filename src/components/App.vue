@@ -16,11 +16,15 @@ import Header from "./Header.vue";
 import Grid from "./Grid.vue";
 import CommandBox from "./CommandBox.vue";
 import OutputBox from "./OutputBox.vue";
+import Login from "./Login.vue";
+import Logout from "./Logout.vue";
 
 export default {
   name: "App",
   components: {
     Header,
+    Login,
+    Logout,
     Grid,
     CommandBox,
     OutputBox,
