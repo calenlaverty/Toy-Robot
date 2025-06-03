@@ -7,6 +7,7 @@
       </div>
       <p class="login-subtitle">Username and password are both 'admin'</p>
       <button class="login-button" @click="login">Log in</button>
+      <button class="signup-button" @click="signup">Sign up</button>
     </div>
   </div>
 </template>
@@ -19,6 +20,9 @@ export default {
 
     return {
       login: () => {
+        loginWithRedirect();
+      },
+      signup: () => {
         loginWithRedirect({ screen_hint: "signup" });
       },
     };
