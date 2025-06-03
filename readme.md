@@ -15,11 +15,13 @@
 - Github Secrets (For Azure Storage)
 - Netlify w/ CI
 - Azure Storage (Playwright Report)
+- Vue.js
+- Supabase
+- Auth0
 
 ## To do
 
-- Add Docker container
-- Add Vue
+- Add eslint strictness
 
 ## Toy Robot Brief
 
