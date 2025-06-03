@@ -19,7 +19,7 @@ export default {
 
     return {
       login: () => {
-        loginWithRedirect();
+        loginWithRedirect({ screen_hint: "signup" });
       },
     };
   },
