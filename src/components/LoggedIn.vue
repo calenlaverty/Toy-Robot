@@ -1,21 +1,25 @@
 <template>
-  <div>
-    <button class="logout-button" @click="logout">Log out</button>
+  <div class="header">
+    <div class="user-text">Logged in as: {{ user.nickname }}</div>
+    <button class="logout-button" @click="handleLogout">Log out</button>
   </div>
 </template>
-<script>
+
+<style scoped>
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding-bottom: 1rem;
+}
+</style>
+<script setup>
 import { useAuth0 } from "@auth0/auth0-vue";
 
-export default {
-  setup() {
-    const { logout } = useAuth0();
+const { logout, user } = useAuth0();
 
-    return {
-      logout: () => {
-        logout({ logoutParams: { returnTo: window.location.origin } });
-      },
-    };
-  },
+const handleLogout = () => {
+  logout({ logoutParams: { returnTo: window.location.origin } });
 };
 </script>
 <style>

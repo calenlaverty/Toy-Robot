@@ -3,8 +3,9 @@
     <Login />
   </div>
   <div v-if="isAuthenticated">
+    <!-- {{ console.log(user) }} -->
     <Header />
-    <Logout />
+    <LoggedIn />
     <CommandBox @execute-command="handleCommand" />
     <Grid
       :robot-position="robot?.state.position"
@@ -15,7 +16,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useAuth0 } from "@auth0/auth0-vue";
 import { InputHandler } from "../scripts/commands/input-handler";
 import Header from "./Header.vue";
@@ -23,22 +24,29 @@ import Grid from "./Grid.vue";
 import CommandBox from "./CommandBox.vue";
 import OutputBox from "./OutputBox.vue";
 import Login from "./Login.vue";
-import Logout from "./Logout.vue";
+import LoggedIn from "./LoggedIn.vue";
+import Robot from "../scripts/objects/robot";
+import { createClient } from "@supabase/supabase-js";
+import { config } from "dotenv";
+config();
 
-// Auth0
-const { isAuthenticated, isLoading } = useAuth0();
-
-// Reactive data
+const { isAuthenticated, user } = useAuth0();
 const robot = ref(null);
 const outputMessages = ref([]);
 
-// Methods
+watch([isAuthenticated, user], async ([isAuth, userData]) => {
+  if (isAuth && userData?.sub) {
+    await loadFromDatabase();
+  }
+});
+
 const handleCommand = (inputText) => {
   try {
     const commandParts = inputText.toUpperCase().split(/[\s,]+/);
     const { message, robot: newRobot } = InputHandler.process(
       commandParts,
-      robot.value
+      robot.value,
+      user.value?.sub
     );
     robot.value = newRobot;
     addOutputMessage(message);
@@ -64,6 +72,26 @@ const addOutputMessage = (message, isError = false) => {
     message: message,
     isError: isError,
   });
+};
+
+const loadFromDatabase = async () => {
+  const supabase = createClient(process.env.DB_DOMAIN, process.env.DB_KEY);
+
+  const { data, error } = await supabase
+    .from("Robots")
+    .select("*")
+    .eq("user_id", user.value.sub)
+    .single();
+
+  if (error) {
+    console.log("No saved robot found or error:", error);
+    return;
+  }
+
+  if (data?.robot_data) {
+    robot.value = new Robot();
+    robot.value.setState(data.robot_data, user.value.sub);
+  }
 };
 </script>
 

@@ -22,7 +22,8 @@ export const validateRobotExists = function (robot: Robot | null) {
 export abstract class InputHandler {
   static process(
     commandParts: string[],
-    robot: Robot | null
+    robot: Robot | null,
+    userId: string
   ): { message: string; robot: Robot | null } {
     const command = ROTATION_COMMANDS.includes(commandParts[0])
       ? (commandParts[0] as RotationType)
@@ -38,7 +39,7 @@ export abstract class InputHandler {
           if (!robot) {
             robot = new Robot();
           }
-          return robot.place(newPosition, newDirection);
+          return robot.place(newPosition, newDirection, userId);
         } catch (error: unknown) {
           throw new Error(String(error));
         }
@@ -46,7 +47,7 @@ export abstract class InputHandler {
       case "MOVE": {
         try {
           validateRobotExists(robot);
-          return robot!.move();
+          return robot!.move(userId);
         } catch (error: unknown) {
           throw new Error(String(error));
         }
@@ -55,7 +56,7 @@ export abstract class InputHandler {
       case "LEFT": {
         try {
           validateRobotExists(robot);
-          return robot!.rotate(command);
+          return robot!.rotate(command, userId);
         } catch (error: unknown) {
           throw new Error(String(error));
         }

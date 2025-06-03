@@ -1,7 +1,5 @@
 <template>
   <div class="command-section">
-    <h2 class="command-title">command</h2>
-
     <div class="command-input-section">
       <label for="command" class="input-label">
         Enter command (one per line):
@@ -104,8 +102,6 @@ export default {
   },
   methods: {
     execute() {
-      console.log("Execute button clicked!");
-
       if (this.commandInput.trim()) {
         this.$emit("execute-command", this.commandInput);
         this.commandInput = "";

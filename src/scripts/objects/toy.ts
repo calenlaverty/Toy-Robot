@@ -14,13 +14,13 @@ export default class Toy {
       facing: "NORTH",
     }
   ) {}
-  move() {
+  move(userId: string) {
     throw new Error("Move not yet implemented");
   }
-  rotate(dir: RotationType) {
+  rotate(dir: RotationType, userId: string) {
     throw new Error("Rotate not yet implemented");
   }
-  place(position: Coordinate, dir: DirectionType) {
+  place(position: Coordinate, dir: DirectionType, userId: string) {
     throw new Error("Place not yet implemented");
   }
 }

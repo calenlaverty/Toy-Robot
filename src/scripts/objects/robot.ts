@@ -2,6 +2,10 @@ import Toy from "./toy";
 import { GridUtils } from "../utils/grid";
 import { Coordinate, State, DirectionType, RotationType } from "../utils/types";
 import { CARDINAL_DIRECTIONS } from "../utils/helpers";
+import { createClient } from "@supabase/supabase-js";
+import { config } from "dotenv";
+
+config();
 
 export default class Robot extends Toy {
   constructor() {
@@ -12,24 +16,44 @@ export default class Robot extends Toy {
     return { ...this.state };
   }
 
-  setState(newState: State) {
+  setState(newState: State, userId: string) {
     this.state = {
       ...newState,
       position: { ...newState.position },
       facing: newState.facing,
     };
+    this.saveToDatabase(newState, userId);
+  }
+
+  async saveToDatabase(robotState: any, userId: string) {
+    const supabase = createClient(process.env.DB_DOMAIN!, process.env.DB_KEY!);
+
+    const { data, error } = await supabase
+      .from("Robots")
+      .upsert(
+        { robot_data: robotState, user_id: userId },
+        { onConflict: "user_id" }
+      )
+      .select();
+
+    // console.log(data ?? error);
   }
 
   place(
     position: Coordinate,
-    dir: DirectionType
+    dir: DirectionType,
+    userId: string
   ): { message: string; robot: Robot } {
     try {
-      this.setState({
-        ...this.getState(),
-        position,
-        facing: dir,
-      });
+      this.setState(
+        {
+          ...this.getState(),
+          position,
+          facing: dir,
+        },
+        userId
+      );
+
       return {
         message: `Placed Robot at x:${position.x}, y:${
           position.y
@@ -41,7 +65,7 @@ export default class Robot extends Toy {
     }
   }
 
-  move(): { message: string; robot: Robot } {
+  move(userId: string): { message: string; robot: Robot } {
     try {
       const currentState = this.getState();
       const newState = {
@@ -65,9 +89,9 @@ export default class Robot extends Toy {
           break;
       }
 
-      console.log(this.getState());
+      // console.log(this.getState());
       GridUtils.validatePosition(newState.position);
-      this.setState(newState);
+      this.setState(newState, userId);
       return {
         message: `Moved ${
           currentState.facing!.toLowerCase() || ""
@@ -79,7 +103,7 @@ export default class Robot extends Toy {
     }
   }
 
-  rotate(dir: RotationType): { message: string; robot: Robot } {
+  rotate(dir: RotationType, userId: string): { message: string; robot: Robot } {
     try {
       const currentState = this.getState();
       const rotationStep = dir === "RIGHT" ? 1 : -1;
@@ -88,10 +112,13 @@ export default class Robot extends Toy {
           rotationStep +
           CARDINAL_DIRECTIONS.length) %
         CARDINAL_DIRECTIONS.length;
-      this.setState({
-        ...currentState,
-        facing: CARDINAL_DIRECTIONS[newDirectionIndex] as DirectionType,
-      });
+      this.setState(
+        {
+          ...currentState,
+          facing: CARDINAL_DIRECTIONS[newDirectionIndex] as DirectionType,
+        },
+        userId
+      );
       return {
         message: `Rotated ${dir.toLowerCase()}`,
         robot: this,
