@@ -83,4 +83,21 @@ export default {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
 }
+.signup-button {
+  width: 100%;
+  padding: 10px 24px;
+  background: transparent;
+  color: #6366f1;
+  border: 2px solid #6366f1;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.signup-button:hover {
+  background: #6366f1;
+  color: white;
+}
 </style>
