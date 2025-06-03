@@ -1,15 +1,16 @@
 <template>
-  <div>
+  <div v-if="!isAuthenticated">
+    <Login />
+  </div>
+  <div v-if="isAuthenticated">
     <Header />
-    <Login v-if="!isAuthenticated" />
-    <Logout v-if="isAuthenticated" />
-    <CommandBox v-if="isAuthenticated" @execute-command="handleCommand" />
+    <Logout />
+    <CommandBox @execute-command="handleCommand" />
     <Grid
-      v-if="isAuthenticated"
       :robot-position="robot?.state.position"
       :robot-direction="robot?.state.facing"
     />
-    <OutputBox v-if="isAuthenticated" :messages="outputMessages" />
+    <OutputBox :messages="outputMessages" />
   </div>
 </template>
 

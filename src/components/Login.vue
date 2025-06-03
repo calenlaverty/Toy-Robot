@@ -1,7 +1,10 @@
 <template>
   <div class="login-container">
     <div class="login-card">
-      <h2 class="login-title">Welcome Back</h2>
+      <div class="logo">
+        <div class="robot-icon">🤖</div>
+        <h1>Toy Robot Simulator</h1>
+      </div>
       <p class="login-subtitle">Username and password are both 'admin'</p>
       <button class="login-button" @click="login">Log in</button>
     </div>
@@ -28,6 +31,9 @@ export default {
   font-weight: 700;
   color: #1f2937;
   margin-bottom: 0.5rem;
+}
+.robot-icon {
+  font-size: 5rem;
 }
 .login-subtitle {
   color: #6b7280;
