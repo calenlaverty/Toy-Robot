@@ -1,16 +1,21 @@
 <template>
   <div>
     <Header />
-    <CommandBox @execute-command="handleCommand" />
+    <Login v-if="!isAuthenticated" />
+    <Logout v-if="isAuthenticated" />
+    <CommandBox v-if="isAuthenticated" @execute-command="handleCommand" />
     <Grid
+      v-if="isAuthenticated"
       :robot-position="robot?.state.position"
       :robot-direction="robot?.state.facing"
     />
-    <OutputBox :messages="outputMessages" />
+    <OutputBox v-if="isAuthenticated" :messages="outputMessages" />
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from "vue";
+import { useAuth0 } from "@auth0/auth0-vue";
 import { InputHandler } from "../scripts/commands/input-handler";
 import Header from "./Header.vue";
 import Grid from "./Grid.vue";
@@ -19,56 +24,45 @@ import OutputBox from "./OutputBox.vue";
 import Login from "./Login.vue";
 import Logout from "./Logout.vue";
 
-export default {
-  name: "App",
-  components: {
-    Header,
-    Login,
-    Logout,
-    Grid,
-    CommandBox,
-    OutputBox,
-  },
-  data() {
-    return {
-      robot: null,
-      outputMessages: [],
-    };
-  },
-  methods: {
-    handleCommand(inputText) {
-      try {
-        const commandParts = inputText.toUpperCase().split(/[\s,]+/);
-        const { message, robot } = InputHandler.process(
-          commandParts,
-          this.robot
-        );
-        this.robot = robot;
-        this.addOutputMessage(message);
-      } catch (error) {
-        console.error("Error processing command:", error);
-        this.addOutputMessage(error.message, true); // true = error
-      }
-    },
+// Auth0
+const { isAuthenticated, isLoading } = useAuth0();
 
-    addOutputMessage(message, isError = false) {
-      const dateTime = new Date().toLocaleString("en-US", {
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric",
-        hour12: true,
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-      });
+// Reactive data
+const robot = ref(null);
+const outputMessages = ref([]);
 
-      this.outputMessages.unshift({
-        timestamp: dateTime,
-        message: message,
-        isError: isError,
-      });
-    },
-  },
+// Methods
+const handleCommand = (inputText) => {
+  try {
+    const commandParts = inputText.toUpperCase().split(/[\s,]+/);
+    const { message, robot: newRobot } = InputHandler.process(
+      commandParts,
+      robot.value
+    );
+    robot.value = newRobot;
+    addOutputMessage(message);
+  } catch (error) {
+    console.error("Error processing command:", error);
+    addOutputMessage(error.message, true);
+  }
+};
+
+const addOutputMessage = (message, isError = false) => {
+  const dateTime = new Date().toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: true,
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  });
+
+  outputMessages.value.unshift({
+    timestamp: dateTime,
+    message: message,
+    isError: isError,
+  });
 };
 </script>
 
